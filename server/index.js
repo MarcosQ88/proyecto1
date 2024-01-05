@@ -17,6 +17,25 @@ const db =mysql.createConnection({
 //     console
 // });
 
+ app.put("/update",(req,res)=>{
+    const id = req.body.id;
+    const name = req.body.name;
+    const code = req.body.code;
+    const correlativas = req.body.correlativas;
+    
+
+    db.query('UPDATE assignatures SET name=?,code=?,correlativas=? WHERE id=?',[name,code,correlativas,id],
+    (err,result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send(result);
+        }
+    }
+    );
+
+ });
+
 
 
 app.get("/assignatures",(req,res)=>{

@@ -1,9 +1,7 @@
 import './App.css';
 import * as component from "./Components.js";
-import {BrowserRouter,Routes, link, Route} from 'react-router-dom';
-import Home from './Home.js';
-import  Materia from'./Materia.js';
 
+import {Outlet} from "react-router-dom";
 
 import { useState, useEffect } from 'react';
 //importacion de Axios. creo que es para manejar de forma mas facil los llamados al server
@@ -16,46 +14,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-
-
-
 //creo que esto seria como el objeto que se usa para invoccat a las notificacioness
 const noti = withReactContent(Swal);
-function App() {
 
-  const [assignaturesList,setAssignatures]= useState([]);
+const Materia = () => {
 
-  const getAssignatures =()=>{
-  alert("pedo");
-  Axios.get("http://localhost:3006/assignatures").then((response)=>{
-    setAssignatures(response.data);
 
-  });
-}
-  
-  
-  useEffect(() => {
-    getAssignatures();
-  }, []);
-  
   return(
-
     
+    <div>
+        3
 
-<BrowserRouter>
-  <Routes>
-    <Route path="/" element={<Home lista ={assignaturesList} />} />
-    <Route path='/materia/:id' element={<Materia />} />
-    </Routes>
-
-    </BrowserRouter>
-
-    
+    <Outlet />
+    </div>
   );
   
 
 }
 
-
-
-export default App;
+export default Materia;
