@@ -17,15 +17,30 @@ import withReactContent from "sweetalert2-react-content";
 //creo que esto seria como el objeto que se usa para invoccat a las notificacioness
 const noti = withReactContent(Swal);
 
-const Home = ({lista}) => {
+export const getAssignatures =(setAssignatures)=>{
+  alert("pedo");
+  Axios.get("http://localhost:3006/assignatures").then((response)=>{
+    setAssignatures(response.data);
 
+  });
+}
+
+
+const Home = ({}) => {
+
+  const [assignaturesList,setAssignatures]= useState([]);
+  
+  useEffect(() => {
+    getAssignatures(setAssignatures);
+  }, []);
 
   return(
     
     <div>
 
       <component.navbar />
-      <component.GridAssignatures lista ={lista}/>
+      {/* seguro hay una forma mas elegante para la lista sin tener que pasearla por todos los archivos. */}
+      <component.GridAssignatures lista ={assignaturesList} setAssignatures ={setAssignatures}/>
 
     <Outlet />
     </div>

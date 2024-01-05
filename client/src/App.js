@@ -23,20 +23,7 @@ import withReactContent from "sweetalert2-react-content";
 const noti = withReactContent(Swal);
 function App() {
 
-  const [assignaturesList,setAssignatures]= useState([]);
 
-  const getAssignatures =()=>{
-  alert("pedo");
-  Axios.get("http://localhost:3006/assignatures").then((response)=>{
-    setAssignatures(response.data);
-
-  });
-}
-  
-  
-  useEffect(() => {
-    getAssignatures();
-  }, []);
   
   return(
 
@@ -44,7 +31,7 @@ function App() {
 
 <BrowserRouter>
   <Routes>
-    <Route path="/" element={<Home lista ={assignaturesList} />} />
+    <Route path="/" element={<Home  />} />
     <Route path='/materia/:id' element={<Materia />} />
     </Routes>
 

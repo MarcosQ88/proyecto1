@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import penimage from './images/pen.png';
-import getAssignatures from "./App.js";
+import {getAssignatures} from "./Home.js";
 
 import { useState, useEffect } from 'react';
 //importacion de Axios. creo que es para manejar de forma mas facil los llamados al server
@@ -35,7 +35,7 @@ function ButtonEdit({assignature},{card}){
 
 }
 
-const update = ({val})=>{
+const update = ({val}, {setAssignatures})=>{
   Axios.put("http://localhost:3006/update",{
     id : val.id,
     name :  document.getElementById("input-name").value,
@@ -43,7 +43,7 @@ const update = ({val})=>{
     correlativas : document.getElementById("input-correlativas").value,
  
   }).then(()=>{
-    getAssignatures();
+    getAssignatures(setAssignatures);
     Noti.fire({
       title: "<strong>Actualización exitosa!!!</strong>",
       html: "<i>El empleado <strong></strong> fue actualizado con éxito!!!</i>",
@@ -57,7 +57,6 @@ const update = ({val})=>{
         text: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Intente más tarde":JSON.parse(JSON.stringify(error)).message
       })
     });
-    
 }
 
 
@@ -76,7 +75,7 @@ export function navbar() {
     </Navbar>
   );
 }
-const editAssignature = (val)=>{
+const editAssignature = (val, setAssignatures)=>{
 
 
   Noti.fire({
@@ -90,8 +89,7 @@ const editAssignature = (val)=>{
     focusConfirm: false,
     preConfirm: () => {
       return [
-        update(val ={val})
-        
+        update(val ={val}, setAssignatures= {setAssignatures})
       ];
     }
   });
@@ -100,7 +98,7 @@ const editAssignature = (val)=>{
 // <img src={penimage}  alt="editar" className='object-fit-scale w-25 h-25'/>
 
 
-export function GridAssignatures({lista}) {
+export function GridAssignatures({lista , setAssignatures}) {
   return (
       <Row xs={1} md={4} className="mx-2">
         {lista.map((val, idx) => (
@@ -116,7 +114,7 @@ export function GridAssignatures({lista}) {
                 {/* NO ENCONTRE COMO HACER ESTO DE UNA FORMA CORRECTA, NOMAS QUERIA CAMBIAR LA ALTURA*/}
               </Card.Body>
               {/* <ButtonEdit assignature= {val} card={true}  /> */}
-             <button onClick={()=>{editAssignature(val);}} type="button" className='btn btn-light border-black p-0 m-2 position-absolute bottom-0 end-0 button_edit'><img src={penimage}  alt="editar" className='icon'/></button>
+             <button onClick={()=>{editAssignature(val, setAssignatures);}} type="button" className='btn btn-light border-black p-0 m-2 position-absolute bottom-0 end-0 button_edit'><img src={penimage}  alt="editar" className='icon'/></button>
             </Card>
           </Col>
         ))}
