@@ -1,7 +1,7 @@
 # intento de organizador de archivos
 
 #### to-do:
-- implementar boton eliminar en el popup al editar una materia.
+- [] implementar boton eliminar en el popup al editar una materia.
 - implementar un boton para aniadir una materia al final de las ya existentes.
 - implementar direccionamiento adfecuado al presionar una materia
 
