@@ -58,6 +58,24 @@ const add = ({setAssignatures})=>{
   });
 }
 
+const del = ({val}, {setAssignatures})=>{
+  Axios.delete(`http://localhost:3006/delete/${val.id}`).then(()=>{
+    getAssignatures(setAssignatures);
+    Noti.fire({
+      title: "<strong>Actualización exitosa!!!</strong>",
+      html: "<i>El empleado <strong></strong> fue actualizado con éxito!!!</i>",
+      icon: 'success',
+      timer:3000
+    })
+  }).catch(function(error){
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Intente más tarde":JSON.parse(JSON.stringify(error)).message
+    })
+  });
+}
+
 const update = ({val}, {setAssignatures})=>{
   Axios.put("http://localhost:3006/update",{
     id : val.id,
@@ -107,8 +125,9 @@ const addAssignature = (setAssignatures)=>{
         <label>Nombre:<input id="input-name" placeholder="Nombre de tu materia" class="swal2-input" style="width:22vw; margin-left :3vw; margin-right:0;"></label>
         <label>Codigo:<input id="input-code" placeholder= "Codigo de identificacion" class="swal2-input" style="width:22vw; margin-left :3vw; margin-right:0;"></label>
         <label>Correlativas:<input id="input-correlativas" placeholder= "Codigos de las correlativas" class="swal2-input" style="width:22vw; margin-left :3vw; margin-right:0;"></label>
-      `,
       focusConfirm: false,
+        `,
+      
       preConfirm: () => {
         return [
           add(setAssignatures= {setAssignatures})
@@ -129,15 +148,31 @@ const editAssignature = (val, setAssignatures)=>{
         <label>Nombre:<input id="input-name" placeholder=`+ val.name +` class="swal2-input" style="width:22vw; margin-left :3vw; margin-right:0;"></label>
         <label>Codigo:<input id="input-code" placeholder=`+ val.code +` class="swal2-input" style="width:22vw; margin-left :3vw; margin-right:0;"></label>
         <label>Correlativas:<input id="input-correlativas" placeholder=`+ val.correlativas +` class="swal2-input" style="width:22vw; margin-left :3vw; margin-right:0;"></label>
-      `,
+        `,
       focusConfirm: false,
       preConfirm: () => {
         return [
           update(val ={val}, setAssignatures= {setAssignatures})
         ];
       }
+      
     });
 
+}
+
+const deleteAssignature = (val, setAssignatures)=>{
+  Noti.fire({
+    title: 'Esta seguro de eliminar '+ val.name+".",
+    icon: 'warning',
+    showConfirmButton:true,
+    confirmButtonText: 'Cool'
+
+  }).then((result) => {
+    if (result.isConfirmed) {
+      del(val ={val}, setAssignatures= {setAssignatures})
+    }
+
+});
 }
 // <img src={penimage}  alt="editar" className='object-fit-scale w-25 h-25'/>
 
@@ -159,13 +194,15 @@ export function GridAssignatures({lista , setAssignatures}) {
                 {/* NO ENCONTRE COMO HACER ESTO DE UNA FORMA CORRECTA, NOMAS QUERIA CAMBIAR LA ALTURA*/}
               </Card.Body>
               {/* <ButtonEdit assignature= {val} card={true}  /> */}
+             <button onClick={()=>{deleteAssignature(val, setAssignatures);}} type="button" className='btn  p-0 m-0 position-absolute top-0 end-0  button_edit'>X</button>
+
              <button onClick={()=>{editAssignature(val, setAssignatures);}} type="button" className='btn btn-light border-black p-0 m-2 position-absolute bottom-0 end-0 button_edit'><img src={penimage}  alt="editar" className='icon'/></button>
             </Card>
           </Col>
         ))}
       </Row>
       <div className='div_button_add'>
-        <Button  type="button" onClick={()=>{addAssignature(setAssignatures);}} className='  btn btn-light border-black p-0 m-0 h-100 position-absolute top-50 start-50 translate-middle w-25'>+</Button>
+        <Button  type="button" onClick={()=>{addAssignature(setAssignatures);}} className='  btn btn-light border-black p-0 m-0 h-100 position-absolute top-50 start-50 translate-middle w-25 fs-1'>+</Button>
       </div>
       </>
     );
