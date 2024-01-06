@@ -1,5 +1,7 @@
 import './App.css';
 import * as component from "./Components.js";
+import Button from 'react-bootstrap/Button';
+
 
 import {Outlet} from "react-router-dom";
 
@@ -18,7 +20,6 @@ import withReactContent from "sweetalert2-react-content";
 const noti = withReactContent(Swal);
 
 export const getAssignatures =(setAssignatures)=>{
-  alert("pedo");
   Axios.get("http://localhost:3006/assignatures").then((response)=>{
     setAssignatures(response.data);
 
@@ -41,6 +42,8 @@ const Home = ({}) => {
       <component.navbar />
       {/* seguro hay una forma mas elegante para la lista sin tener que pasearla por todos los archivos. */}
       <component.GridAssignatures lista ={assignaturesList} setAssignatures ={setAssignatures}/>
+      
+
 
     <Outlet />
     </div>

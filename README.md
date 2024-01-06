@@ -2,8 +2,11 @@
 
 #### to-do:
 - implementar boton eliminar en el popup al editar una materia.
-- implementar un boton para aniadir una materia al final de las ya existentes.
 - implementar direccionamiento adfecuado al presionar una materia
+
+### cosas que estan mal
+- si le das al boton editar de una materia y sin poner nada en los campos aceptas se guarda con todos los campos vacios
+- seguro el boton de aniadir tiene el mismo tema
 
 ## idea:
 pequenio sketch hecho en figma antes de empezar a programar

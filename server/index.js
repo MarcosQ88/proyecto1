@@ -17,6 +17,25 @@ const db =mysql.createConnection({
 //     console
 // });
 
+app.post("/create",(req,res)=>{
+    const name = req.body.name;
+    const code = req.body.code;
+    const correlativas = req.body.correlativas;
+    
+
+    db.query('INSERT INTO assignatures(name,code,correlativas) VALUES(?,?,?)',[name,code,correlativas],
+    (err,result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send(result);
+        }
+    }
+    );
+
+ });
+
+
  app.put("/update",(req,res)=>{
     const id = req.body.id;
     const name = req.body.name;

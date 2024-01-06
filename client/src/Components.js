@@ -33,6 +33,29 @@ function ButtonEdit({assignature},{card}){
     }
     
 
+    
+}
+
+const add = ({setAssignatures})=>{
+  Axios.post("http://localhost:3006/create",{
+    name :  document.getElementById("input-name").value,
+    code : document.getElementById("input-code").value,
+    correlativas : document.getElementById("input-correlativas").value,
+  }).then(()=>{
+    getAssignatures(setAssignatures);
+    Noti.fire({
+      title: "<strong>Actualización exitosa!!!</strong>",
+      html: "<i>El empleado <strong></strong> fue actualizado con éxito!!!</i>",
+      icon: 'success',
+      timer:3000
+    })
+  }).catch(function(error){
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Intente más tarde":JSON.parse(JSON.stringify(error)).message
+    })
+  });
 }
 
 const update = ({val}, {setAssignatures})=>{
@@ -75,31 +98,53 @@ export function navbar() {
     </Navbar>
   );
 }
+
+const addAssignature = (setAssignatures)=>{
+    Noti.fire({
+      title: "Editar ",
+      // podria sacar el inline style
+      html: `
+        <label>Nombre:<input id="input-name" placeholder="Nombre de tu materia" class="swal2-input" style="width:22vw; margin-left :3vw; margin-right:0;"></label>
+        <label>Codigo:<input id="input-code" placeholder= "Codigo de identificacion" class="swal2-input" style="width:22vw; margin-left :3vw; margin-right:0;"></label>
+        <label>Correlativas:<input id="input-correlativas" placeholder= "Codigos de las correlativas" class="swal2-input" style="width:22vw; margin-left :3vw; margin-right:0;"></label>
+      `,
+      focusConfirm: false,
+      preConfirm: () => {
+        return [
+          add(setAssignatures= {setAssignatures})
+        ];
+      }
+    });
+  }
+
+
+
 const editAssignature = (val, setAssignatures)=>{
 
 
-  Noti.fire({
-    title: "Editar <strong>"+val.name+"</strong>",
-    // podria sacar el inline style
-    html: `
-      <label>Nombre:<input id="input-name" placeholder=`+ val.name +` class="swal2-input" style="width:23vw; margin-left :3vw; margin-right:0;"></label>
-      <label>Codigo:<input id="input-code" placeholder=`+ val.code +` class="swal2-input" style="width:23vw; margin-left :3vw; margin-right:0;"></label>
-      <label>Correlativas:<input id="input-correlativas" placeholder=`+ val.correlativas +` class="swal2-input" style="width:23vw; margin-left :3vw; margin-right:0;"></label>
-    `,
-    focusConfirm: false,
-    preConfirm: () => {
-      return [
-        update(val ={val}, setAssignatures= {setAssignatures})
-      ];
-    }
-  });
- 
+    Noti.fire({
+      title: "Editar <strong>"+val.name+"</strong>",
+      // podria sacar el inline style
+      html: `
+        <label>Nombre:<input id="input-name" placeholder=`+ val.name +` class="swal2-input" style="width:22vw; margin-left :3vw; margin-right:0;"></label>
+        <label>Codigo:<input id="input-code" placeholder=`+ val.code +` class="swal2-input" style="width:22vw; margin-left :3vw; margin-right:0;"></label>
+        <label>Correlativas:<input id="input-correlativas" placeholder=`+ val.correlativas +` class="swal2-input" style="width:22vw; margin-left :3vw; margin-right:0;"></label>
+      `,
+      focusConfirm: false,
+      preConfirm: () => {
+        return [
+          update(val ={val}, setAssignatures= {setAssignatures})
+        ];
+      }
+    });
+
 }
 // <img src={penimage}  alt="editar" className='object-fit-scale w-25 h-25'/>
 
 
 export function GridAssignatures({lista , setAssignatures}) {
   return (
+    <>
       <Row xs={1} md={4} className="mx-2">
         {lista.map((val, idx) => (
           <Col key={idx}>
@@ -119,6 +164,10 @@ export function GridAssignatures({lista , setAssignatures}) {
           </Col>
         ))}
       </Row>
+      <div className='div_button_add'>
+        <Button  type="button" onClick={()=>{addAssignature(setAssignatures);}} className='  btn btn-light border-black p-0 m-0 h-100 position-absolute top-50 start-50 translate-middle w-25'>+</Button>
+      </div>
+      </>
     );
   }
 
