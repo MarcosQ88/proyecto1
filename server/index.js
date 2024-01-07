@@ -85,6 +85,20 @@ app.get("/assignatures",(req,res)=>{
 );
 
 
+app.get("/materia/:id",(req,res)=>{
+    const id = req.params.id;
+    db.query('SELECT * FROM assignatures WHERE id=?',id,
+    (err,result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send(result)
+        }
+    })
+    }
+);
+
+
 
 app.listen(3006,()=>{
     console.log("corriendo en el puerto 3006");

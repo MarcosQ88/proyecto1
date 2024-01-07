@@ -1,5 +1,7 @@
 import './App.css';
 import * as component from "./Components.js";
+import Navbar from 'react-bootstrap/Navbar';
+import Container from 'react-bootstrap/Container';
 
 import {Outlet} from "react-router-dom";
 
@@ -16,19 +18,61 @@ import withReactContent from "sweetalert2-react-content";
 
 //creo que esto seria como el objeto que se usa para invoccat a las notificacioness
 const noti = withReactContent(Swal);
+const currentUrl = window.location.href;
+
+const id =currentUrl.slice(30);
+
+
+
+
+
 
 const Materia = () => {
 
+  const [assignature,setAssignature]= useState([]);
 
-  return(
-    
-    <div>
-        3
 
-    <Outlet />
-    </div>
-  );
+  useEffect(() => {
+   getAssignature();
+
+  }, []);
+
+  const getAssignature =()=>{
+    Axios.get(`http://localhost:3006/materia/${id}`).then((response)=>{
+
+    setAssignature(response.data);
   
+    });
+  }
+  
+
+
+function TopBar() {
+  return (
+    <Navbar className="bg-body-secondary h2">
+      <Container>
+        <Navbar.Brand href="#home" className='fw-bold'>{assignature.length > 0 ? assignature[0].name : 'Loading...'}</Navbar.Brand>
+        <Navbar.Toggle />
+        <Navbar.Collapse className="justify-content-end ">
+        {/* <ButtonEdit card= {false} /> */}
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+}
+  
+  return(
+<>
+    <div>
+
+    <TopBar />
+
+    </div>
+
+
+    </>
+  );
+
 
 }
 

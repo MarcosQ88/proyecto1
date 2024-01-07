@@ -125,7 +125,6 @@ const addAssignature = (setAssignatures)=>{
         <label>Nombre:<input id="input-name" placeholder="Nombre de tu materia" class="swal2-input" style="width:22vw; margin-left :3vw; margin-right:0;"></label>
         <label>Codigo:<input id="input-code" placeholder= "Codigo de identificacion" class="swal2-input" style="width:22vw; margin-left :3vw; margin-right:0;"></label>
         <label>Correlativas:<input id="input-correlativas" placeholder= "Codigos de las correlativas" class="swal2-input" style="width:22vw; margin-left :3vw; margin-right:0;"></label>
-      focusConfirm: false,
         `,
       
       preConfirm: () => {
@@ -160,6 +159,7 @@ const editAssignature = (val, setAssignatures)=>{
 
 }
 
+
 const deleteAssignature = (val, setAssignatures)=>{
   Noti.fire({
     title: 'Esta seguro de eliminar '+ val.name+".",
@@ -178,11 +178,14 @@ const deleteAssignature = (val, setAssignatures)=>{
 
 
 export function GridAssignatures({lista , setAssignatures}) {
+
   return (
     <>
+   
       <Row xs={1} md={4} className="mx-2">
         {lista.map((val, idx) => (
           <Col key={idx}>
+            
             <Card className=' my-3 '>
               <Card.Body className='my-5 '>
               <Card.Title className='my-5  text-uppercase fs-3 fw-bolder font-monospace text-center'> {val.name} </Card.Title>
@@ -192,18 +195,23 @@ export function GridAssignatures({lista , setAssignatures}) {
                 <strong>Correlativas</strong> : {val.correlativas}
         </Card.Text>
                 {/* NO ENCONTRE COMO HACER ESTO DE UNA FORMA CORRECTA, NOMAS QUERIA CAMBIAR LA ALTURA*/}
+                <a href={"materia/"+val.id} class="stretched-link"></a>
               </Card.Body>
               {/* <ButtonEdit assignature= {val} card={true}  /> */}
              <button onClick={()=>{deleteAssignature(val, setAssignatures);}} type="button" className='btn  p-0 m-0 position-absolute top-0 end-0  button_edit'>X</button>
 
              <button onClick={()=>{editAssignature(val, setAssignatures);}} type="button" className='btn btn-light border-black p-0 m-2 position-absolute bottom-0 end-0 button_edit'><img src={penimage}  alt="editar" className='icon'/></button>
             </Card>
+            
           </Col>
         ))}
+         
       </Row>
+     
       <div className='div_button_add'>
         <Button  type="button" onClick={()=>{addAssignature(setAssignatures);}} className='  btn btn-light border-black p-0 m-0 h-100 position-absolute top-50 start-50 translate-middle w-25 fs-1'>+</Button>
       </div>
+      
       </>
     );
   }

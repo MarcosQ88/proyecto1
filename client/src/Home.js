@@ -40,7 +40,7 @@ const Home = ({}) => {
     <div>
 
       <component.navbar />
-      {/* seguro hay una forma mas elegante para la lista sin tener que pasearla por todos los archivos. */}
+      
       <component.GridAssignatures lista ={assignaturesList} setAssignatures ={setAssignatures}/>
       
 

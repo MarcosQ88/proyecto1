@@ -7,6 +7,8 @@
 ### cosas que estan mal
 - si le das al boton editar de una materia y sin poner nada en los campos aceptas se guarda con todos los campos vacios
 - seguro el boton de aniadir tiene el mismo tema
+- la organizacion de las carpetas. un componente aparentemente es tipico de ordenarse en una carpeta "components" con una sub carpeta para cada componente y dentro el idex y style del mismo
+- muchas variables con nombres similares y no muy descriptivos
 
 ## idea:
 pequenio sketch hecho en figma antes de empezar a programar

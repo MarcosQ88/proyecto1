@@ -31,8 +31,8 @@ function App() {
 
 <BrowserRouter>
   <Routes>
-    <Route path="/" element={<Home  />} />
     <Route path='/materia/:id' element={<Materia />} />
+    <Route path="/" element={<Home  />} />
     </Routes>
 
     </BrowserRouter>
